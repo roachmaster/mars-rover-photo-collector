@@ -1,0 +1,76 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+
+    dependencies {
+        classpath("org.yaml:snakeyaml:1.17")
+        classpath('com.github.spullara.mustache.java:compiler:0.9.5')
+    }
+}
+
+import com.github.mustachejava.DefaultMustacheFactory
+import com.github.mustachejava.Mustache
+import com.github.mustachejava.MustacheFactory
+import org.yaml.snakeyaml.Yaml
+
+def templatesDir = "${projectDir}/src/main/resources/templates"
+def yamlDir = "${projectDir}/src/main/resources/schemas"
+
+task generateCode{
+    doFirst {
+        file(templatesDir).eachFile { fileName ->
+            def templateType = fileName.getName().split(/\./)[0]
+            def templateYamlDir = "${yamlDir}/${templateType}"
+            file(templateYamlDir).eachFile { yamlName ->
+                def pair = generateFile "${fileName.absolutePath}", "${yamlName.absolutePath}"
+                saveFile pair
+            }
+        }
+    }
+}
+
+project.tasks.compileJava.dependsOn generateCode
+
+static def generateFile(def templateFile, def yamlFile){
+    Map<String, Object> map = convertYamlToMap(yamlFile)
+    Mustache mustache = compileTemplate(templateFile);
+    def generatedString = createTemplateInstance(mustache, map)
+    def canonicalName = getGeneratedClassName(map)
+    return new Tuple2(canonicalName, generatedString)
+}
+
+static def convertYamlToMap(def yamlFile){
+    InputStream input = new FileInputStream(new File(yamlFile));
+    Yaml yaml = new Yaml();
+    return (Map<String, Object>) yaml.load(input);
+}
+
+static def compileTemplate(def templateFile){
+    MustacheFactory mf = new DefaultMustacheFactory();
+    return mf.compile(templateFile);
+}
+
+static def createTemplateInstance(def mustache, def yamlInfo){
+    StringWriter writer = new StringWriter();
+    mustache.execute(writer, yamlInfo).flush();
+    return writer.toString()
+}
+
+static def getGeneratedClassName(def map){
+    return "${map.get('basePackage')}.${map.get('relativePackage')}.${map.get('beanName')}";
+}
+
+def saveFile(def tuple){
+    def path = ((GString) tuple[0]).replace(".","/")
+    def fileName = path.split(/\//).last()
+    def fileDir =  file("${generatedDir}/${(path.split(/\//) - fileName).join('/')}")
+    String genCode = tuple[1]
+    if(!fileDir.exists()){
+        fileDir.mkdirs()
+    }
+    file("${fileDir}/${fileName}.java").text = genCode
+}
