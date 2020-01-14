@@ -47,9 +47,8 @@ apply plugin: 'io.spring.dependency-management'
 sourceSets {
     main {
         java {
-            srcDir 'src/main/java'
             srcDir generatedDir
-            println it.files
+            srcDir 'src/main/java'
         }
     }
 }
