@@ -17,12 +17,13 @@ public class UrlImageDownloader {
     private String photoDir;
 
     public File download(String url){
-        Request request = buildRequest(url);
         String parseFileName = getParsedFileName(url);
         String filePath = getFilePath(parseFileName);
+        Request request = buildRequest(url);
         client.newCall(request).enqueue(new ImageDownloadCallBack(filePath));
         return new File(filePath);
     }
+
     private String getParsedFileName(String fileName){
         String[] tokens = fileName.split("/");
         return tokens[tokens.length - 1];

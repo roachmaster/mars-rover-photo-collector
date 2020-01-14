@@ -18,6 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/")
 public class MarsRoverImageController {
+
     @Autowired
     private MarsRoverApiClient marsRoverApiClient;
 
@@ -35,7 +36,7 @@ public class MarsRoverImageController {
     }
 
     @RequestMapping(value = "rovers/{name}/photos/{id}", method = RequestMethod.GET)
-    public ResponseEntity<byte[]> getImgUrl(@PathVariable String name,@PathVariable String id, @RequestParam("img_src") String imgSrc) throws IOException {
+    public ResponseEntity<byte[]> getImgUrl(@PathVariable String name, @PathVariable String id, @RequestParam("img_src") String imgSrc) throws IOException {
         File filePath = marsRoverApiClient.download(name, id, imgSrc);
         return ResponseEntity.ok()
                 .contentType(MediaType.IMAGE_JPEG)

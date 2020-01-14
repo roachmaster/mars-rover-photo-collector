@@ -11,8 +11,6 @@ import java.io.IOException;
 
 @Service
 public class DefaultMarsRoverApiClient implements MarsRoverApiClient {
-    @Value("#{baseUrl}")
-    private String baseUrl;
 
     @Value("#{apiKey}")
     private String apiKey;
@@ -38,7 +36,4 @@ public class DefaultMarsRoverApiClient implements MarsRoverApiClient {
         return imageDownloader.download(imgSrc);
     }
 
-    private String buildImageUrl(String roverName, String photoId, String imgSrc){
-        return baseUrl + "/api/v1/rovers/" + roverName + "/photos/" + photoId + "?img_src=" + imgSrc;
-    }
 }
