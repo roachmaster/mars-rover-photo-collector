@@ -6,9 +6,13 @@ This project using the API described here (https://api.nasa.gov/api.html)
   - http://localhost:8080/api/v1/dates
   
 The endpoint reads a.txt file that has the following dates and returns the dates formatted. The April 31, 2018 is not in a valid format.
+
 02/27/17
+
 June 2, 2018
+
 Jul-13-2016
+
 April 31, 2018
 
 - GET list of rovers: /api/v1/rovers
