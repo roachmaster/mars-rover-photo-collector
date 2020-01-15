@@ -12,7 +12,7 @@ April 31, 2018
 
 - GET list of rovers: /api/v1/rovers
   - http://localhost:8080/api/v1/rovers
-- GET list of photos for a given date: /api/v1/rovers/{name}/photos?{earth_date}
+- GET list of photos for a given date: /api/v1/rovers/{name}/photos?earth_date={earth_date}
   - http://localhost:8080/api/v1/rovers/opportunity/photos?earth_date=2018-06-02
 - GET an individual photo: /api/v1/rovers/{name}/photos/{id}?img_src={img_src}
   - http://localhost:8080/api/v1/rovers/Curiosity/photos/617694?img_src=http://mars.jpl.nasa.gov/msl-raw-images/msss/01622/mcam/1622MR0083260010801245I01_DXXX.jpg 
