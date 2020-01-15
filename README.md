@@ -16,4 +16,12 @@ April 31, 2018
   - http://localhost:8080/api/v1/rovers/opportunity/photos?earth_date=2018-06-02
 - GET an individual photo: /api/v1/rovers/{name}/photos/{id}?img_src={img_src}
   - http://localhost:8080/api/v1/rovers/Curiosity/photos/617694?img_src=http://mars.jpl.nasa.gov/msl-raw-images/msss/01622/mcam/1622MR0083260010801245I01_DXXX.jpg 
-
+  
+## Testing the Spring boot app
+1. Download Repo using git clone
+2. Build project using Gradle
+  i. ./gradlew clean build
+3. Start up a Local instance of the Spring boot app
+  i. ./gradlew bootRun
+4. In a bash terminal perform curl commands using the examples above
+  i.curl http://localhost:8080/api/v1/rovers
