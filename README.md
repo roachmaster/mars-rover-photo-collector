@@ -20,8 +20,8 @@ April 31, 2018
 ## Testing the Spring boot app
 1. Download Repo using git clone
 2. Build project using Gradle  
-  i. ./gradlew clean build
+  ./gradlew clean build
 3. Start up a Local instance of the Spring boot app  
-  i. ./gradlew bootRun
+  ./gradlew bootRun
 4. In a bash terminal perform curl commands using the examples above  
-  i.curl http://localhost:8080/api/v1/rovers
+  curl http://localhost:8080/api/v1/rovers
