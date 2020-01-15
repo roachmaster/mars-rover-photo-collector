@@ -25,7 +25,7 @@ public class DefaultDatesService implements DatesService {
 
     @PostConstruct
     public void initializeDates() {
-        String fileName = "/imageDates.txt";
+        String fileName = "./src/test/resources/imageDates.txt";
         try{
             List<String> dates = FileUtils.readLines(new File(fileName),"utf-8");
             formatDates(dates);
