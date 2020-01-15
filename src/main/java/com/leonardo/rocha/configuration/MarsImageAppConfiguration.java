@@ -23,7 +23,6 @@ public class MarsImageAppConfiguration {
         return apiKey;
     }
 
-
     @Value("${baseUrl:https://api.nasa.gov}")
     String baseUrl;
 

@@ -1,18 +1,16 @@
 package com.leonardo.rocha.endpoint;
 
 import com.leonardo.rocha.endpoint.date.DateFormatter;
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 @Service
 public class DefaultDatesService implements DatesService {
@@ -28,20 +26,25 @@ public class DefaultDatesService implements DatesService {
     @PostConstruct
     public void initializeDates() {
         String fileName = "/imageDates.txt";
-
-        try (InputStream inputStream = getClass().getResourceAsStream(fileName);
-            Stream<String> stream = new BufferedReader(new InputStreamReader(inputStream)).lines()) {
-
-            stream.forEach(date -> {
-                try {
-                    dateList.add(DateFormatter.formatDate(date));
-                } catch (ParseException e) {
-                    logger.error("{} is an invalid date.", date, e.getMessage());
-                }
-            });
-
-        } catch (Exception e) {
+        try{
+            List<String> dates = FileUtils.readLines(new File(fileName),"utf-8");
+            formatDates(dates);
+        } catch(IOException e) {
             logger.error("Error reading file {}", fileName, e.getStackTrace());
+        }
+    }
+
+    private void formatDates(List<String> dates){
+        for(String date : dates){
+            formatAndAddDate(date);
+        }
+    }
+
+    private void formatAndAddDate(String date){
+        try {
+            dateList.add(DateFormatter.formatDate(date));
+        } catch (ParseException e){
+            logger.error("{} is an invalid date.", date, e.getMessage());
         }
     }
 }
