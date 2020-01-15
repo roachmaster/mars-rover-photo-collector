@@ -3,7 +3,7 @@ This project using the API described here (https://api.nasa.gov/api.html)
 
 ## This Spring boot app exposes the following endpoints.
 - GET list of dates: /api/v1/dates
-  - http://localhost:8080/api/v1/dates
+  - http://localhost:8080/api/v1/dates  
 The endpoint reads a.txt file that has the following dates and returns the dates formatted. The April 31, 2018 is not in a valid format.  
 02/27/17  
 June 2, 2018  
