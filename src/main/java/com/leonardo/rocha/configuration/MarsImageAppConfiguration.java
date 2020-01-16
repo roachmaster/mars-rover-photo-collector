@@ -27,6 +27,11 @@ public class MarsImageAppConfiguration {
     String baseUrl;
 
     @Bean
+    public String datesFileName(@Value("${datesFileName:src/test/resources/imageDates.txt}") String datesFileName) {
+        return datesFileName;
+    }
+
+    @Bean
     public String baseUrl(@Value("${baseUrl:https://api.nasa.gov}") String baseUrl) {
         return baseUrl;
     }

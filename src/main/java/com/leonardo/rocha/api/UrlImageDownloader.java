@@ -10,6 +10,7 @@ import java.io.File;
 
 @Component
 public class UrlImageDownloader {
+
     @Autowired
     private OkHttpClient client;
 

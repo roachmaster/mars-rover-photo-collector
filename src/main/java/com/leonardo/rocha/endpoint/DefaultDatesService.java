@@ -4,6 +4,7 @@ import com.leonardo.rocha.endpoint.date.DateFormatter;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -14,6 +15,10 @@ import java.util.List;
 
 @Service
 public class DefaultDatesService implements DatesService {
+
+    @Value("#{datesFileName}")
+    private String datesFileName;
+
     private final Logger logger = LoggerFactory.getLogger(DatesService.class);
 
     private List<String> dateList = new ArrayList<String>();
@@ -25,12 +30,17 @@ public class DefaultDatesService implements DatesService {
 
     @PostConstruct
     public void initializeDates() {
-        String fileName = "./src/test/resources/imageDates.txt";
         try{
+            setDateList(datesFileName);
+        } catch(IOException e) {
+            logger.error("Error reading file {}", datesFileName, e.getStackTrace());
+        }
+    }
+
+    private void setDateList(String fileName) throws IOException {
+        if(dateList.isEmpty()){
             List<String> dates = FileUtils.readLines(new File(fileName),"utf-8");
             formatDates(dates);
-        } catch(IOException e) {
-            logger.error("Error reading file {}", fileName, e.getStackTrace());
         }
     }
 
