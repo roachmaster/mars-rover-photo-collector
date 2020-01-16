@@ -25,3 +25,6 @@ April 31, 2018
   ./gradlew bootRun
 4. In a bash terminal perform curl commands using the examples above  
   curl http://localhost:8080/api/v1/rovers
+  
+## Automated builds
+https://circleci.com/gh/roachmaster/mars-rover-photo-collector  
