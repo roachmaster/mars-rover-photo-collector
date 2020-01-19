@@ -21,13 +21,13 @@ def templatesDir = "${projectDir}/src/main/resources/templates"
 def yamlDir = "${projectDir}/src/main/resources/schemas"
 
 task generateCode{
-    doFirst {
+    doFirst{
         file(templatesDir).eachFile { fileName ->
             def templateType = fileName.getName().split(/\./)[0]
             def templateYamlDir = "${yamlDir}/${templateType}"
             file(templateYamlDir).eachFile { yamlName ->
-                def pair = generateFile "${fileName.absolutePath}", "${yamlName.absolutePath}"
-                saveFile pair
+               def pair = generateFile "${fileName.absolutePath}", "${yamlName.absolutePath}"
+              saveFile pair
             }
         }
     }
@@ -51,7 +51,8 @@ static def convertYamlToMap(def yamlFile){
 
 static def compileTemplate(def templateFile){
     MustacheFactory mf = new DefaultMustacheFactory();
-    return mf.compile(templateFile);
+    File f = new File(templateFile);
+    return mf.compile(new InputStreamReader(new FileInputStream(f),"UTF-8"),f.getName());
 }
 
 static def createTemplateInstance(def mustache, def yamlInfo){
