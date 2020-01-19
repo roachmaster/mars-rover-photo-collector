@@ -1,6 +1,6 @@
 node {
     stage("build"){
-        checkout 
+        checkout scm
         sh "ls" 
         sh "./gradlew clean build --stacktrace --info"
     }
