@@ -1,7 +1,6 @@
 node {
     stage("build"){
-Dls
-        sh "" 
+        sh "ls" 
         sh "./gradlew clean build --stacktrace --info"
     }
 }
