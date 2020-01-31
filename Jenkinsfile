@@ -1,3 +1,2 @@
-gradlewProjectBuild {
-    myTest = "yep"
+javaBuild {
 }
