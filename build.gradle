@@ -25,7 +25,6 @@ project.ext.set("generatedDir","${buildDir}/generatecode/src/main/java")
 apply plugin: 'java'
 
 group 'com.leonardo.rocha'
-version '0.1'
 
 sourceCompatibility = 1.8
 
@@ -75,4 +74,19 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-web')
     testCompile('org.springframework.boot:spring-boot-starter-test')
     compile('org.apache.commons:commons-lang3:3.7')
+}
+
+apply plugin: 'maven'
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: "https://roachmaster-maven-repo.appspot.com") {
+                authentication(userName: mavenUser, password: mavenPassword)
+            }
+            pom.version = version + "-SNAPSHOT"
+            pom.artifactId = "test"
+            pom.groupId = "com.leonardo.rocha"
+        }
+    }
 }
