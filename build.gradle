@@ -24,12 +24,17 @@ project.ext.set("generatedDir","${buildDir}/generatecode/src/main/java")
 
 apply plugin: 'java'
 
-group 'com.leonardo.rocha'
-
 sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
+    maven {
+        credentials {
+            username mavenUser
+            password mavenPassword
+        }
+        url mavenRepo
+    }
 }
 
 ext {
@@ -81,12 +86,12 @@ apply plugin: 'maven'
 uploadArchives {
     repositories {
         mavenDeployer {
-            repository(url: "https://roachmaster-maven-repo.appspot.com") {
+            repository(url: mavenRepo) {
                 authentication(userName: mavenUser, password: mavenPassword)
             }
             pom.version = version + "-SNAPSHOT"
-            pom.artifactId = "test"
-            pom.groupId = "com.leonardo.rocha"
+            pom.artifactId = artifactId
+            pom.groupId = group
         }
     }
 }

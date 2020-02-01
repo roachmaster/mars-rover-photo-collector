@@ -24,7 +24,4 @@ April 31, 2018
 3. Start up a Local instance of the Spring boot app  
   ./gradlew bootRun
 4. In a bash terminal perform curl commands using the examples above  
-  curl http://localhost:8080/api/v1/rovers
-  
-## Automated builds
-https://circleci.com/gh/roachmaster/mars-rover-photo-collector  
+  curl http://localhost:8080/api/v1/rovers  
