@@ -90,7 +90,7 @@ uploadArchives {
             }
             pom.version = version + "-SNAPSHOT"
             pom.artifactId = artifactId
-            pom.groupId = group
+            pom.groupId = groupId
         }
     }
 }
