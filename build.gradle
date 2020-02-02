@@ -17,12 +17,11 @@ buildscript {
 }
 
 plugins {
+    id 'maven'
     id 'java'
 }
 
 project.ext.set("generatedDir","${buildDir}/generatecode/src/main/java")
-
-apply plugin: 'java'
 
 sourceCompatibility = 1.8
 
@@ -81,7 +80,6 @@ dependencies {
     compile('org.apache.commons:commons-lang3:3.7')
 }
 
-apply plugin: 'maven'
 uploadArchives {
     repositories {
         mavenDeployer {
