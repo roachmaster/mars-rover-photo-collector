@@ -82,7 +82,7 @@ dependencies {
 }
 
 apply plugin: 'maven'
-
+println mavenUser
 uploadArchives {
     repositories {
         mavenDeployer {
