@@ -105,11 +105,11 @@ uploadArchives {
 }
 
 def getJenkinsBuildNumber(){
-    def isSet = project.ext.has("jenkinsBuild") && project.ext("jenkinsBuild") != ""
+    def isSet = project.ext.has("jenkinsBuild") && project.ext.get("jenkinsBuild") != ""
     return isSet ? project.ext.jenkinsBuild : "fakeNumber"
 }
 
 def getJenkinsWorkspace(){
-    def isSet = project.ext.has("jenkinsWorkspace") && project.ext("jenkinsWorkspace") != ""
+    def isSet = project.ext.has("jenkinsWorkspace") && project.ext.get("jenkinsWorkspace") != ""
     return isSet ? project.ext.jenkinsWorkspace : "fakeNumber"
 }
