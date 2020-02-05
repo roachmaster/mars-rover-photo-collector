@@ -25,17 +25,6 @@ project.ext.set("generatedDir","${buildDir}/generatecode/src/main/java")
 
 sourceCompatibility = 1.8
 
-repositories {
-    mavenCentral()
-    maven {
-        credentials {
-            username mavenUser
-            password mavenPassword
-        }
-        url mavenRepo
-    }
-}
-
 ext {
     retrofitVersion = '2.3.0'
     mockitoVersion = '2.10.0'
@@ -60,7 +49,7 @@ dependencies {
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.10.1'
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.10.1'
 
-    compile             "com.google.auto.value:auto-value-annotations:${autoValueVersion}"
+    compile "com.google.auto.value:auto-value-annotations:${autoValueVersion}"
     annotationProcessor "com.google.auto.value:auto-value:${autoValueVersion}"
 
     compile "com.squareup.okhttp3:logging-interceptor:${okhttpVersion}"
@@ -76,8 +65,26 @@ dependencies {
     compile group: 'commons-io', name: 'commons-io', version: '2.6'
 
     compile('org.springframework.boot:spring-boot-starter-web')
-    testCompile('org.springframework.boot:spring-boot-starter-test')
     compile('org.apache.commons:commons-lang3:3.7')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        credentials {
+            username mavenUser
+            password mavenPassword
+        }
+        url mavenRepo
+    }
+}
+
+bootJar{
+    manifest{
+        attributes.put("Jenkins-Build", getJenkinsBuildNumber())
+        attributes.put("Jenkins-Workspace", getJenkinsWorkspace());
+    }
 }
 
 uploadArchives {
@@ -86,9 +93,23 @@ uploadArchives {
             repository(url: mavenRepo) {
                 authentication(userName: mavenUser, password: mavenPassword)
             }
+            addFilter("springBoot") {artifact, file ->
+                println artifact.name
+                artifact.name == project.name
+            }
             pom.version = version + "-SNAPSHOT"
             pom.artifactId = artifactId
             pom.groupId = groupId
         }
     }
+}
+
+def getJenkinsBuildNumber(){
+    def isSet = project.ext.has("jenkinsBuild") && project.ext("jenkinsBuild") != ""
+    return isSet ? project.ext.jenkinsBuild : "fakeNumber"
+}
+
+def getJenkinsWorkspace(){
+    def isSet = project.ext.has("jenkinsWorkspace") && project.ext("jenkinsWorkspace") != ""
+    return isSet ? project.ext.jenkinsWorkspace : "fakeNumber"
 }
