@@ -94,12 +94,11 @@ uploadArchives {
                 authentication(userName: mavenUser, password: mavenPassword)
             }
             addFilter("springBoot") {artifact, file ->
-                println artifact.name
                 artifact.name == project.name
             }
-            pom.version = version + "-SNAPSHOT"
-            pom.artifactId = artifactId
-            pom.groupId = groupId
+            pom('springBoot').version = version + "-SNAPSHOT"
+            pom('springBoot').artifactId = artifactId
+            pom('springBoot').groupId = groupId
         }
     }
 }
