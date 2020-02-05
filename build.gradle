@@ -97,7 +97,7 @@ uploadArchives {
                 artifact.name == project.name
             }
             pom('springBoot').version = version + "-SNAPSHOT"
-            pom('springBoot').artifactId = artifactId
+            pom('springBoot').artifactId = rootProject.name
             pom('springBoot').groupId = groupId
         }
     }
