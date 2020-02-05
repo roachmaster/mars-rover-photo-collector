@@ -1,2 +1,2 @@
-javaBuild {
+javaBuild(this){
 }
