@@ -1,2 +1,3 @@
 javaBuild(this){
+    //test
 }
